@@ -1,16 +1,16 @@
 class PageUrlShort < ApplicationRecord
   validates_presence_of :origin_url
-  validates_uniqueness_of :redirect_url, :origin_url
+  validates_uniqueness_of :origin_url
 
   scope :order_by_view_counter, -> { order(view_counter: :desc) }
 
   ALPHABET =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split(//)
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split(//)
 
   before_create :short_url
 
   def sum_view_counter
-    self.increment!(:view_counter)
+    increment!(:view_counter)
   end
 
   private
@@ -25,8 +25,7 @@ class PageUrlShort < ApplicationRecord
     return ALPHABET[0] if i == 0
     s = ''
     base = ALPHABET.length
-    while i > 0
-      p i
+    while i.positive?
       s << ALPHABET[i.modulo(base)]
       i /= base
     end
